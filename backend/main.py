@@ -90,6 +90,7 @@ async def root():
     }
 
 @app.get("/health")
+@app.get("/api/health")
 async def health_check():
     """Health check endpoint."""
     return {
@@ -101,6 +102,7 @@ async def health_check():
     }
 
 @app.get("/supported-drugs")
+@app.get("/api/supported-drugs")
 async def get_drugs():
     """Get list of supported drugs."""
     return {
@@ -109,6 +111,7 @@ async def get_drugs():
     }
 
 @app.get("/supported-genes")
+@app.get("/api/supported-genes")
 async def get_genes():
     """Get list of supported genes."""
     return {
@@ -117,6 +120,7 @@ async def get_genes():
     }
 
 @app.get("/drug-info/{drug}")
+@app.get("/api/drug-info/{drug}")
 async def get_drug_info(drug: str):
     """Get information about a specific drug."""
     from cpic_guidelines import get_gene_for_drug, get_reference_drug_for_gene, CPIC_GUIDELINES
@@ -143,6 +147,7 @@ async def get_drug_info(drug: str):
     }
 
 @app.post("/analyze")
+@app.post("/api/analyze")
 async def analyze(
     vcf_file: UploadFile = File(...),
     drug: str = Form(...),
@@ -192,6 +197,7 @@ async def analyze(
         raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
 
 @app.post("/analyze/json")
+@app.post("/api/analyze/json")
 async def analyze_json(request: AnalyzeRequest):
     """
     Analyze VCF content provided as JSON string.
